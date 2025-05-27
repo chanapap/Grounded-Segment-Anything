@@ -133,3 +133,10 @@ dmypy.json
 outputs/
 
 .idea/
+
+*.jpg
+*.jpeg
+*.png
+*.npy
+*.pth
+*.onnx

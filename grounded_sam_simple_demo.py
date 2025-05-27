@@ -101,7 +101,7 @@ labels = [
     for _, _, confidence, class_id, _, _ 
     in detections]
 annotated_image = mask_annotator.annotate(scene=image.copy(), detections=detections)
-annotated_image = box_annotator.annotate(scene=annotated_image, detections=detections, labels=labels)
+annotated_image = box_annotator.annotate(scene=annotated_image, detections=detections) #, labels=labels)
 
 # save the annotated grounded-sam image
 cv2.imwrite("grounded_sam_annotated_image.jpg", annotated_image)
