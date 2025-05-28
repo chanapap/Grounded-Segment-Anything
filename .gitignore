@@ -140,3 +140,5 @@ outputs/
 *.npy
 *.pth
 *.onnx
+*.glb
+*.npz
