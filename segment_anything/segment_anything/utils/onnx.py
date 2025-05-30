@@ -82,8 +82,12 @@ class SamOnnxModel(nn.Module):
         )
 
         prepadded_size = self.resize_longest_image_size(orig_im_size, self.img_size)
-        masks = masks[..., : int(prepadded_size[0]), : int(prepadded_size[1])]
-
+        # masks = masks[..., : int(prepadded_size[0]), : int(prepadded_size[1])]
+        row_indices = torch.arange(prepadded_size[0])
+        col_indices = torch.arange(prepadded_size[1])
+        masks = torch.index_select(masks, dim=2, index=row_indices)
+        masks = torch.index_select(masks, dim=3, index=col_indices)
+        
         orig_im_size = orig_im_size.to(torch.int64)
         h, w = orig_im_size[0], orig_im_size[1]
         masks = F.interpolate(masks, size=(h, w), mode="bilinear", align_corners=False)

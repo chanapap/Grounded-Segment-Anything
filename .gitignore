@@ -139,6 +139,6 @@ outputs/
 *.png
 *.npy
 *.pth
-*.onnx
+# *.onnx
 *.glb
 *.npz
