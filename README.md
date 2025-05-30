@@ -1,6 +1,34 @@
 ![](./assets/Grounded-SAM_logo.png)
 
 # Grounded-Segment-Anything
+
+## HCI Environment Setup
+```bash
+git clone --recursive https://github.com/chanapap/Grounded-Segment-Anything.git
+conda create -n dino python=3.8
+conda install pytorch==2.4.0 torchvision==0.19.0 torchaudio==2.4.0  pytorch-cuda=11.8 -c pytorch -c nvidia
+
+# Windows
+SET AM_I_DOCKER=False
+SET BUILD_WITH_CUDA=True
+SET CUDA_HOME=/path/to/cuda-11.8/
+
+# Linux
+export AM_I_DOCKER=False
+export BUILD_WITH_CUDA=True
+export CUDA_HOME=/path/to/cuda-11.8/
+
+# if windows use x64 2019
+python -m pip install -e segment_anything
+pip install opencv-python pycocotools matplotlib onnxruntime onnx ipykernel
+set DISTUTILS_USE_SDK=1
+pip install --no-build-isolation -e GroundingDINO
+```
+
+
+
+
+
 [![YouTube](https://badges.aleen42.com/src/youtube.svg)](https://youtu.be/oEQYStnF2l8) [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roboflow-ai/notebooks/blob/main/notebooks/automated-dataset-annotation-and-evaluation-with-grounding-dino-and-sam.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/camenduru/grounded-segment-anything-colab) [![HuggingFace Space](https://img.shields.io/badge/🤗-HuggingFace%20Space-cyan.svg)](https://huggingface.co/spaces/IDEA-Research/Grounded-SAM) [![Replicate](https://replicate.com/cjwbw/grounded-recognize-anything/badge)](https://replicate.com/cjwbw/grounded-recognize-anything)  [![ModelScope Official Demo](https://img.shields.io/badge/ModelScope-Official%20Demo-important)](https://modelscope.cn/studios/tuofeilunhifi/Grounded-Segment-Anything/summary) [![Huggingface Demo by Community](https://img.shields.io/badge/Huggingface-Demo%20by%20Community-red)](https://huggingface.co/spaces/yizhangliu/Grounded-Segment-Anything) [![Stable-Diffusion WebUI](https://img.shields.io/badge/Stable--Diffusion-WebUI%20by%20Community-critical)](https://github.com/continue-revolution/sd-webui-segment-anything) [![Jupyter Notebook Demo](https://img.shields.io/badge/Demo-Jupyter%20Notebook-informational)](./grounded_sam.ipynb) [![Static Badge](https://img.shields.io/badge/GroundingDINO-arXiv-blue)](https://arxiv.org/abs/2303.05499) [![Static Badge](https://img.shields.io/badge/Segment_Anything-arXiv-blue)](https://arxiv.org/abs/2304.02643) [![Static Badge](https://img.shields.io/badge/Grounded_SAM-arXiv-blue)](https://arxiv.org/abs/2401.14159)
 
 
