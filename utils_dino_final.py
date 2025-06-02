@@ -611,7 +611,8 @@ def get_10th_percentile_true_point(mask):
 
     # Get indices where distance is closest to the 10th percentile
     idx = np.argmin(np.abs(distances - percentile_threshold))
-    return list(coords[idx])  # (row, col)
+    # return list(coords[idx])  # (row, col)
+    return [coords[idx][1], coords[idx][0]]  # (row, col)
 
 def filter_rugs_with_floor_update_and_revert(
     floor_labels, floor_bboxes, floor_masks,
@@ -784,19 +785,53 @@ def get_floor_bboxes_points_with_rug(SOURCE_IMAGE_PATH):
 
 ############ ONNX UTILS ##############
 
+# def show_mask(mask, ax):
+#     color = np.array([30/255, 144/255, 255/255, 0.6])
+#     h, w = mask.shape[-2:]
+#     mask_image = mask.reshape(h, w, 1) * color.reshape(1, 1, -1)
+#     ax.imshow(mask_image)
+import random
+
+# Global state to track available colors
+_color_pool = []
+
 def show_mask(mask, ax):
-    color = np.array([30/255, 144/255, 255/255, 0.6])
+    global _color_pool
+
+    # Define a fixed color set
+    color_set = [
+        [255, 99, 71],    # Tomato
+        [30, 144, 255],   # DodgerBlue
+        [34, 139, 34],    # ForestGreen
+        [255, 215, 0],    # Gold
+        [138, 43, 226],   # BlueViolet
+        [255, 20, 147],   # DeepPink
+    ]
+
+    # Refill and shuffle pool if empty
+    if len(_color_pool) == 0:
+        _color_pool = color_set.copy()
+        random.shuffle(_color_pool)
+
+    # Pick and remove a color from the pool
+    rgb = np.array(_color_pool.pop()) / 255.0
+    color = np.append(rgb, 0.6)
+
+    # Create mask image
     h, w = mask.shape[-2:]
     mask_image = mask.reshape(h, w, 1) * color.reshape(1, 1, -1)
     ax.imshow(mask_image)
     
-def show_points(coords, labels, ax, marker_size=375):
+def show_points(coords, labels, ax, marker_size=100):
     pos_points = coords[labels==1]
-    neg_points = coords[labels==0]
-    ax.scatter(pos_points[:, 0], pos_points[:, 1], color='green', marker='*', s=marker_size, edgecolor='white', linewidth=1.25)
-    ax.scatter(neg_points[:, 0], neg_points[:, 1], color='red', marker='*', s=marker_size, edgecolor='white', linewidth=1.25)   
+    print(pos_points)
+    # neg_points = coords[labels==0]
+    ax.scatter(pos_points[:, 0], pos_points[:, 1], color='blue', marker='.', s=marker_size, edgecolor='white', linewidth=1.25)
+    # ax.scatter(neg_points[:, 0], neg_points[:, 1], color='red', marker='*', s=marker_size, edgecolor='white', linewidth=1.25)   
     
 def show_box(box, ax):
     x0, y0 = box[0], box[1]
     w, h = box[2] - box[0], box[3] - box[1]
-    ax.add_patch(plt.Rectangle((x0, y0), w, h, edgecolor='green', facecolor=(0,0,0,0), lw=2))   
+    ax.add_patch(plt.Rectangle((x0, y0), w, h, edgecolor='red', facecolor=(0,0,0,0), lw=0.5))   
+
+
