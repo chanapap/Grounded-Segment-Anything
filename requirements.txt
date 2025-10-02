@@ -14,8 +14,8 @@ setuptools
 supervision
 termcolor
 timm
-torch
-torchvision
+# torch
+# torchvision
 transformers
 yapf
 nltk
